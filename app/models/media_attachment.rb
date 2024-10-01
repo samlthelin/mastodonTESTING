@@ -83,12 +83,12 @@ class MediaAttachment < ApplicationRecord
 
   IMAGE_CONVERTED_STYLES = {
     original: {
-      format: 'jpeg',
-      content_type: 'image/jpeg',
+      format: 'webp',
+      content_type: 'image/webp',
     }.merge(IMAGE_STYLES[:original]).freeze,
 
     small: {
-      format: 'jpeg',
+      format: 'webp',
     }.merge(IMAGE_STYLES[:small]).freeze,
   }.freeze
 
@@ -171,7 +171,7 @@ class MediaAttachment < ApplicationRecord
   DEFAULT_STYLES = [:original].freeze
 
   GLOBAL_CONVERT_OPTIONS = {
-    all: '-quality 90 +profile "!icc,*" +set date:modify +set date:create +set date:timestamp -define jpeg:dct-method=float',
+    all: '-quality 90 -define webp:lossless=false',
   }.freeze
 
   belongs_to :account,          inverse_of: :media_attachments, optional: true
@@ -298,10 +298,8 @@ class MediaAttachment < ApplicationRecord
     def file_styles(attachment)
       if attachment.instance.file_content_type == 'image/gif' || VIDEO_CONVERTIBLE_MIME_TYPES.include?(attachment.instance.file_content_type)
         VIDEO_CONVERTED_STYLES
-      elsif IMAGE_CONVERTIBLE_MIME_TYPES.include?(attachment.instance.file_content_type)
-        IMAGE_CONVERTED_STYLES
       elsif IMAGE_MIME_TYPES.include?(attachment.instance.file_content_type)
-        IMAGE_STYLES
+        IMAGE_CONVERTED_STYLES
       elsif VIDEO_MIME_TYPES.include?(attachment.instance.file_content_type)
         VIDEO_STYLES
       else
