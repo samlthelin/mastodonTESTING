@@ -35,7 +35,7 @@ Click below to **learn more** in a video:
 
 ## Configuration Options for Media Attachments
 
-The `GLOBAL_CONVERT_OPTIONS` constant in `media_attachment.rb` defines the default options for image and video conversions. These options can be adjusted to fine-tune compression settings and output quality.
+The `GLOBAL_CONVERT_OPTIONS` constant in `media_attachment.rb` defines the default options for image conversion. These options can be adjusted to fine-tune compression settings and output quality.
 
 ### Conversion Flags Explained
 
