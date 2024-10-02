@@ -33,6 +33,21 @@ Click below to **learn more** in a video:
 
 [patreon]: https://www.patreon.com/mastodon
 
+## Configuration Options for Media Attachments
+
+The `GLOBAL_CONVERT_OPTIONS` constant in `media_attachment.rb` defines the default options for image and video conversions. These options can be adjusted to fine-tune compression settings and output quality.
+
+### Conversion Flags Explained
+
+- **`-quality`**: Sets the overall compression quality of the output (0-100). Higher values produce better quality but increase file size.
+- **`+profile "!icc,*"`**: Strips ICC profiles and metadata from the file, reducing the file size.
+- **`+set date:modify`, `+set date:create`, `+set date:timestamp`**: Preserves file modification and creation dates, and adds a timestamp.
+- **`-define webp:near-lossless=90`**: Enables near-lossless compression, which retains high visual quality while still compressing the file.
+- **`-define webp:method=6`**: Specifies the compression method for WebP (0-6). Higher values yield better compression but are slower.
+- **`-define webp:filter-strength=60`**: Sets the strength of the deblocking filter. Higher values reduce blocking artifacts but may blur the image slightly.
+
+These options can be modified based on the use case and quality requirements. To update them, edit the `GLOBAL_CONVERT_OPTIONS` constant in the `media_attachment.rb` file.
+
 ## Features
 
 <img src="/app/javascript/images/elephant_ui_working.svg?raw=true" align="right" width="30%" />

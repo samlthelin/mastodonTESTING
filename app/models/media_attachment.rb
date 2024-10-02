@@ -171,7 +171,7 @@ class MediaAttachment < ApplicationRecord
   DEFAULT_STYLES = [:original].freeze
 
   GLOBAL_CONVERT_OPTIONS = {
-    all: '-quality 90 -define webp:lossless=false',
+    all: '-quality 90 +profile "!icc,*" +set date:modify +set date:create +set date:timestamp -define webp:near-lossless=90 -define webp:method=6 -define webp:filter-strength=60',
   }.freeze
 
   belongs_to :account,          inverse_of: :media_attachments, optional: true
@@ -295,6 +295,10 @@ class MediaAttachment < ApplicationRecord
 
     private
 
+    # Returns the supported file styles based on the content type of the attachment.
+    #
+    # @param attachment [Object] the file attachment object
+    # @return [Hash] the styles to be applied based on the content type
     def file_styles(attachment)
       if attachment.instance.file_content_type == 'image/gif' || VIDEO_CONVERTIBLE_MIME_TYPES.include?(attachment.instance.file_content_type)
         VIDEO_CONVERTED_STYLES
